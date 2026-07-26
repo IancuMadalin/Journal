@@ -1,0 +1,12 @@
+# Build results
+bin/
+obj/
+
+# Rider/JetBrains settings
+.idea/
+
+# User-specific files
+*.user
+
+# Journal entries (personal data)
+Saves/
