@@ -6,4 +6,5 @@ public  static class Constants
         Path.Combine(Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Parent!.Parent!.Parent!
                 .FullName,
             "Saves");
+    public enum TitleValidationResult { Valid, Empty, InvalidCharacters, Duplicate }
 }
