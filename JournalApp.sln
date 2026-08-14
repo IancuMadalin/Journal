@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JournalApp.Console", "JournalApp.Console\JournalApp.Console.csproj", "{BD6530CC-C995-4C6B-8995-0F7AE7508440}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JournalApp.Core", "JournalApp.Core\JournalApp.Core.csproj", "{AB5D97F7-BD77-47C6-BA44-C6D5FDBADD28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JournalApp.Gui", "JournalApp.Gui\JournalApp.Gui.csproj", "{F9B4265D-FFD1-4183-A54A-589AA58462E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{BD6530CC-C995-4C6B-8995-0F7AE7508440}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD6530CC-C995-4C6B-8995-0F7AE7508440}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD6530CC-C995-4C6B-8995-0F7AE7508440}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB5D97F7-BD77-47C6-BA44-C6D5FDBADD28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB5D97F7-BD77-47C6-BA44-C6D5FDBADD28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB5D97F7-BD77-47C6-BA44-C6D5FDBADD28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB5D97F7-BD77-47C6-BA44-C6D5FDBADD28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9B4265D-FFD1-4183-A54A-589AA58462E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9B4265D-FFD1-4183-A54A-589AA58462E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9B4265D-FFD1-4183-A54A-589AA58462E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9B4265D-FFD1-4183-A54A-589AA58462E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
