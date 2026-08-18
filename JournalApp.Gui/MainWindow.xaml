@@ -6,10 +6,43 @@
         xmlns:local="clr-namespace:JournalApp.Gui"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TextBlock>
-            Hello, is this thing working? I guess not, it is nvm
-            Now for the hard part, I need to make this look decent.... fuck
-        </TextBlock>
-    </Grid>
+    
+        <Grid Background="Blue">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height = "*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel HorizontalAlignment="Center" 
+                        Margin="10">
+                             <Button Content = "View all entries" Click="ViewAllEntries_OnClick" Style="{StaticResource Menu}"></Button>
+                             <Button Content = "Add entry"></Button>
+                             <Button Content = "Delete entry"></Button>
+                             <Button Content = "Search entry"></Button>
+                             <Button Content = "Hide" Click = "Hide_OnCLick"></Button>
+                         </StackPanel>
+            <ListBox Grid.Row ="1"
+                Name ="EntryListBox" 
+                Visibility="Hidden" 
+                DisplayMemberPath="Name"
+                Background="Green"
+                SelectionChanged="EntryListBox_OnSelectionChanged">
+            </ListBox>
+            <Grid Grid.Row = "2"
+                  Name = "DisplayArea"
+                  Background="Green"
+                  Visibility="Hidden">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height = "Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row = "0" Name = "Title"
+                           Margin="0,0,0,10"></TextBlock>
+                <TextBlock Grid.Row = "1" Name = "Date"
+                           Margin="0,0,0,10"></TextBlock>
+                <TextBlock Grid.Row = "2" Name = "Content"></TextBlock> 
+            </Grid>    
+            </Grid>
+            
 </Window>
