@@ -5,4 +5,8 @@
         <Setter Property="Background" Value="Black"></Setter>
         <Setter Property="Foreground" Value="White"> </Setter>
     </Style>
+    <Style TargetType="ListBoxItem" x:Key="ScrollEntryItem">
+        <!-- Will have to move somewhere else-->
+        <Setter Property="Height" Value="25"></Setter>
+    </Style>
 </ResourceDictionary>

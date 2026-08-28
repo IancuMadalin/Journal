@@ -1,12 +1,14 @@
 ﻿namespace JournalApp;
 using System.Text.Json;
+using System.Collections.ObjectModel;
 
 public class Journal
 {
     private static Journal? _instance;
     public static Journal Instance => _instance ??= new Journal();
 
-    public List<JournalEntry> Entries { get; } = new();
+    public ObservableCollection<JournalEntry> Entries { get; } = new();
+    //ObservableCollcetion e un list mai fancy
     
     private Journal()
     {
@@ -79,9 +81,8 @@ public class Journal
     
     public void DeleteEntry(JournalEntry entry)
     {
-        File.Delete(entry.GetFilePath());
-        Entries.Remove(entry);
-        
+            File.Delete(entry.GetFilePath());
+            Entries.Remove(entry);
     }
 
     public struct SearchResults
