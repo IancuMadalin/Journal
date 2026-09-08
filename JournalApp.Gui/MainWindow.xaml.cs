@@ -18,58 +18,46 @@ public partial class MainWindow : Window
 {
     private readonly Journal journal = Journal.Instance;
     private JournalEntry? currentEntry;
+    private UIElement? currentPanel;
 
     public MainWindow()
     {
         InitializeComponent();
+        AddEntryPanel.Finished += AddEntryPanel_OnFinished;
     }
 
+    private void ShowPanel(UIElement panel)
+    {
+        if(currentPanel != null)
+            {
+            currentPanel.Visibility = Visibility.Collapsed;
+            }
+        panel.Visibility = Visibility.Visible;
+        currentPanel = panel;
+    }
+
+    private void AddEntryPanel_OnFinished(object sender, EventArgs e)
+    {
+        AddEntryPanel.Visibility = Visibility.Collapsed;
+        ButtonStack.IsEnabled = true;
+    }
     private void ViewAllEntries_OnClick(object sender, RoutedEventArgs e)
     {
         
-        EntryListBox.ItemsSource = journal.Entries;
-        EntryListBox.Visibility = Visibility.Visible;
-        DisplayArea.Visibility = Visibility.Visible;
-        
+        //EntryListBox.ItemsSource = journal.Entries;
+        //EntryListBox.Visibility = Visibility.Visible;
+        //DisplayArea.Visibility = Visibility.Visible;
+        ShowPanel(DisplayAreaControl);
     }
 
-    private void Hide_OnCLick(object sender, RoutedEventArgs e)
-    {
-        EntryListBox.Visibility = Visibility.Hidden;
-        DisplayArea.Visibility = Visibility.Hidden;
-        
-    }
+    
 
-    private void EntryListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        
-        if (EntryListBox.SelectedItem is JournalEntry entry)
-        {
-            Title.Text = "Title: " + entry.Name;
-            Date.Text = "Date: " + entry.Date.ToShortDateString();
-            Content.Text = entry.Content;
-            EditDeleteButtons.Visibility =  Visibility.Visible;
-            currentEntry = entry;
-        }
-        else
-        {
-            currentEntry = null;
-            EditDeleteButtons.Visibility =  Visibility.Hidden;
-        }
-    }
+    
 
     private void AddEntryButton_OnClick(object sender, RoutedEventArgs e)
     {
-        //needs work on the design
-        //might go with Show() instead of ShowDialog() for this one
-        //worth pondering
-        AddEntryWindow window = new AddEntryWindow();
-        window.Owner  = this;
-        window.Left = 0;
-        window.Top = ButtonStack.PointToScreen(new Point(0, ButtonStack.ActualHeight)).Y;
-        window.Width = this.ActualWidth-10;
-        window.Height = this.ActualHeight - ButtonStack.ActualHeight-75;
-        window.ShowDialog();
+        ShowPanel(AddEntryPanel);
+        
     }
     
     private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
@@ -77,4 +65,6 @@ public partial class MainWindow : Window
         //add some checks, also should open a different window that asks for an "Are u sure, bro?"
         journal.DeleteEntry(currentEntry);
     }
+    
+    
 }

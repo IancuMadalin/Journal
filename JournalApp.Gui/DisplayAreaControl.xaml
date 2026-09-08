@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="JournalApp.Gui.DisplayAreaControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:JournalApp.Gui"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Background="Blue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height = "*"></RowDefinition>
+        </Grid.RowDefinitions>
+            <!--In acest ListBox apar titlurile Entry-urilor -->
+            <!-- Heavy design changes required-->
+            <ListBox Grid.Row ="0"
+                Name ="EntryListBox" 
+                Visibility="Visible"
+                DisplayMemberPath="Name"
+                Background="Green"
+                BorderThickness="10"
+                Margin="10"
+                SelectionChanged="EntryListBox_OnSelectionChanged"
+                MaxHeight="125"
+                ItemContainerStyle="{StaticResource ScrollEntryItem}">
+            </ListBox>
+            <!-- In acest Grid apare continutul unui Entry -->
+            <Grid Grid.Row = "1"
+                  Name = "DisplayArea"
+                  Background="Green"
+                  Visibility="Visible">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height = "Auto"></RowDefinition>
+                    <RowDefinition Height = "Auto"></RowDefinition>
+                    <RowDefinition Height = "Auto"></RowDefinition>
+                    <RowDefinition Height = "Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row = "0" Name = "Title"
+                           Margin="0,0,0,10"></TextBlock>
+                <TextBlock Grid.Row = "1" Name = "Date"
+                           Margin="0,0,0,10"></TextBlock>
+                <TextBlock Grid.Row = "2" Name = "Content"></TextBlock>
+                <StackPanel Grid.Row="3"
+                            Name = "EditDeleteButtons"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Visibility="Hidden">
+                    <Button Content="Edit Entry"></Button>
+                    <Button Content="Delete Entry"
+                            Name = "DeleteButton"
+                            Click="DeleteButton_OnClick"></Button>
+                </StackPanel>
+            </Grid> 
+    </Grid>
+</UserControl>

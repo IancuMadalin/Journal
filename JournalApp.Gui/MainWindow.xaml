@@ -24,48 +24,12 @@
                                      Click="AddEntryButton_OnClick"
                                      Style="{StaticResource Menu}"></Button>
                              <Button Content = "Search entry"></Button>
-                             <Button Content = "Hide" Click = "Hide_OnCLick"
-                                     Style="{StaticResource Menu}"></Button>
                          </StackPanel>
-            <!--In acest ListBox apar titlurile Entry-urilor -->
-            <!-- Heavy design changes required-->
-            <ListBox Grid.Row ="1"
-                Name ="EntryListBox" 
-                Visibility="Hidden" 
-                DisplayMemberPath="Name"
-                Background="Green"
-                BorderThickness="10"
-                Margin="10"
-                SelectionChanged="EntryListBox_OnSelectionChanged"
-                MaxHeight="125"
-                ItemContainerStyle="{StaticResource ScrollEntryItem}">
-            </ListBox>
-            <!-- In acest Grid apare continutul unui Entry -->
-            <Grid Grid.Row = "2"
-                  Name = "DisplayArea"
-                  Background="Green"
-                  Visibility="Hidden">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height = "Auto"></RowDefinition>
-                    <RowDefinition Height = "Auto"></RowDefinition>
-                    <RowDefinition Height = "Auto"></RowDefinition>
-                    <RowDefinition Height = "Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row = "0" Name = "Title"
-                           Margin="0,0,0,10"></TextBlock>
-                <TextBlock Grid.Row = "1" Name = "Date"
-                           Margin="0,0,0,10"></TextBlock>
-                <TextBlock Grid.Row = "2" Name = "Content"></TextBlock>
-                <StackPanel Grid.Row="3"
-                            Name = "EditDeleteButtons"
-                            Orientation="Horizontal"
-                            HorizontalAlignment="Right"
-                            Visibility="Hidden">
-                    <Button Content="Edit Entry"></Button>
-                    <Button Content="Delete Entry"
-                            Name = "DeleteButton"
-                            Click="DeleteButton_OnClick"></Button>
-                </StackPanel>
-            </Grid>
+            <local:DisplayAreaControl Grid.Row="2"
+                                      x:Name="DisplayAreaControl"
+                                      Visibility="Collapsed"/>
+            <local:AddEntryControl Grid.Row = "2"
+                                   x:Name="AddEntryPanel"
+                                   Visibility="Collapsed"/>
             </Grid>
 </Window>

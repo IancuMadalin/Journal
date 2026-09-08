@@ -4,11 +4,12 @@ using System.Windows.Media;
 
 namespace JournalApp.Gui;
 
-public partial class AddEntryWindow : Window
+public partial class AddEntryControl : UserControl
 {
+    public event EventHandler? Finished;
     
     private readonly Journal journal = Journal.Instance;
-    public AddEntryWindow()
+    public AddEntryControl()
     {
         InitializeComponent();
     }
@@ -54,6 +55,7 @@ public partial class AddEntryWindow : Window
     
     private void CloseButton_OnClick(object sender, RoutedEventArgs e)
     {
-        Close();
+        Finished?.Invoke(this, EventArgs.Empty);
+        
     }
 }

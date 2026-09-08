@@ -8,7 +8,7 @@ public class Journal
     public static Journal Instance => _instance ??= new Journal();
 
     public ObservableCollection<JournalEntry> Entries { get; } = new();
-    //ObservableCollcetion e un list mai fancy
+    //ObservableCollcetion e un list mai fancy, cumva a mers din prima
     
     private Journal()
     {
