@@ -5,7 +5,9 @@ public class JournalEntry
     public string Name { get; set; }
     public DateOnly Date { get; set; }
     public string Content { get; set; }
-
+    public DateTime? LastModified { get; set; }
+    public List<string> Tags { get; set; } = new();
+    
     public JournalEntry()
     {}
 
@@ -15,7 +17,14 @@ public class JournalEntry
         Date = date;
         Content = content;
     }
-    
+
+    public JournalEntry(string title, DateOnly date, string content, List<string> tags)
+    {
+        Name = title;
+        Date = date;
+        Content = content;
+        Tags = tags;
+    }
     public void Display()
     {
         Console.WriteLine($"Title: {Name}");
@@ -24,6 +33,6 @@ public class JournalEntry
     }
     public string GetFilePath()
     {
-        return Path.Combine(Constants.savesFolderPath, $"{Name}.json");
+        return Path.Combine(Constants.EntriesFolderPath, $"{Name}.json");
     }
 }

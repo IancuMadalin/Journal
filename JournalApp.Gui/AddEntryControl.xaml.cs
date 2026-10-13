@@ -35,6 +35,8 @@ public partial class AddEntryControl : UserControl
                     journal.AddEntry(TitleInputBox.Text, DateOnly.FromDateTime(DateTime.Now), ContentInputBox.Text);
                     NewEntryResponseBlock.Foreground = new SolidColorBrush(Colors.Green);
                     NewEntryResponseBlock.Text = "New Entry added successfully";
+                    TitleInputBox.Text = "";
+                    ContentInputBox.Text = "";
                     return;
                 case Constants.TitleValidationResult.Empty:
                     NewEntryResponseBlock.Text = "Title can't be empty";
@@ -56,6 +58,5 @@ public partial class AddEntryControl : UserControl
     private void CloseButton_OnClick(object sender, RoutedEventArgs e)
     {
         Finished?.Invoke(this, EventArgs.Empty);
-        
     }
 }

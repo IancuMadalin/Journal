@@ -9,12 +9,14 @@ public class Journal
 
     public ObservableCollection<JournalEntry> Entries { get; } = new();
     //ObservableCollcetion e un list mai fancy, cumva a mers din prima
+    public ObservableCollection<string> Tags { get; } = new();
     
     private Journal()
     {
+        Directory.CreateDirectory(Constants.EntriesFolderPath);
         try
         {
-            foreach (var entryPath in Directory.GetFiles(Constants.savesFolderPath))
+            foreach (var entryPath in Directory.GetFiles(Constants.EntriesFolderPath))
             {
                 try
                 {
@@ -40,7 +42,40 @@ public class Journal
         {
             Console.WriteLine("Directory not found");
         }
-        
+        try
+        {
+            if (File.Exists(Constants.TagsFilePath))
+            {
+                string json = File.ReadAllText(Constants.TagsFilePath);
+                List<String>? tagsList = JsonSerializer.Deserialize<List<String>>(json);
+                if (tagsList != null)
+                {
+                    foreach (String tag in tagsList)
+                    {
+                            AddTagWithoutSaving(tag); 
+                    }
+                }
+            }
+        }
+        catch (JsonException)
+        {
+            File.Move(Constants.TagsFilePath, Constants.TagsFilePath + ".corrupt", overwrite: true);
+        }
+        bool registryChanged = false;
+        foreach (JournalEntry entry in Entries)
+        {
+            foreach (String tag in entry.Tags)
+            {
+                if (AddTagWithoutSaving(tag) == Constants.TagValidationResult.Valid)
+                {
+                    registryChanged = true;
+                }
+            }
+        }
+        if (registryChanged)
+        {
+            SaveTags();
+        }
     }
     
     public Constants.TitleValidationResult validTitle(string  title)
@@ -63,12 +98,10 @@ public class Journal
         }
         return Constants.TitleValidationResult.Valid;
     }
-
-    
     public void AddEntry(string name, DateOnly date, string content)
     {
         
-             string filePath = Path.Combine(Constants.savesFolderPath, $"{name}.json");
+             string filePath = Path.Combine(Constants.EntriesFolderPath, $"{name}.json");
              JournalEntry newEntry = new JournalEntry(name, date, content);
              Entries.Add(newEntry);
              File.WriteAllText(filePath, JsonSerializer.Serialize<JournalEntry>(newEntry));
@@ -81,8 +114,12 @@ public class Journal
     
     public void DeleteEntry(JournalEntry entry)
     {
+        if (entry != null)
+        {
             File.Delete(entry.GetFilePath());
             Entries.Remove(entry);
+        }
+            
     }
 
     public struct SearchResults
@@ -111,6 +148,54 @@ public class Journal
         }
         return results;
         
+    }
+
+    public static string NormalizeTag(string tag)
+    {
+        tag = tag.Trim().ToUpperInvariant();
+        return tag;
+    }
+
+    private Constants.TagValidationResult ValidTag(string tag)
+    {
+        //expects a normalized tag
+        if (tag.Length == 0)
+        {
+            return Constants.TagValidationResult.Empty;
+        }
+        if (Tags.Contains(tag))
+        {
+            return Constants.TagValidationResult.Duplicate;
+        }
+        return Constants.TagValidationResult.Valid;
+    }
+
+    public Constants.TagValidationResult AddTag(string tag)
+    {
+        var verdict = AddTagWithoutSaving(tag);
+        if (verdict == Constants.TagValidationResult.Valid)
+        {
+            SaveTags();
+            return Constants.TagValidationResult.Valid;
+        }
+        return verdict;
+    }
+    
+    private void SaveTags()
+    {
+        File.WriteAllText(Constants.TagsFilePath, JsonSerializer.Serialize(Tags));
+    }
+
+    private Constants.TagValidationResult AddTagWithoutSaving(string tag)
+    {
+        tag = NormalizeTag(tag);
+        var tagValidationResult = ValidTag(tag);
+        if (tagValidationResult == Constants.TagValidationResult.Valid)
+        {
+            Tags.Add(tag);
+        }
+
+        return tagValidationResult;
     }
     
 }

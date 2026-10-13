@@ -27,8 +27,7 @@
                          Grid.Column="1"
                          Margin="0,0,0,0"
                          Name = "TitleInputBox"
-                         TextChanged="TitleInputBox_OnTextChanged"
-                         ></TextBox>
+                         TextChanged="TitleInputBox_OnTextChanged"></TextBox>
                 
                 <TextBlock Grid.Row="1"
                            Grid.Column="0">Content: </TextBlock>
