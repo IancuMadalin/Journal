@@ -78,9 +78,10 @@ public class Journal
         }
     }
     
-    public Constants.TitleValidationResult validTitle(string  title)
+    public Constants.TitleValidationResult validTitle(string  title , JournalEntry? ignore = null)
     {
-        if (title.Length == 0)
+        title=title.Trim();
+        if (string.IsNullOrWhiteSpace(title))
         {
             return Constants.TitleValidationResult.Empty;
         }
@@ -91,20 +92,23 @@ public class Journal
         }
         foreach (JournalEntry entry in Entries)
         {
-            if (entry.Name == title)
-            {
-                return Constants.TitleValidationResult.Duplicate;
-            }
+                if (string.Equals(entry.Name, title, StringComparison.OrdinalIgnoreCase) 
+                    && !ReferenceEquals(entry, ignore))
+                {
+                    return Constants.TitleValidationResult.Duplicate;
+                }
         }
         return Constants.TitleValidationResult.Valid;
     }
-    public void AddEntry(string name, DateOnly date, string content)
+    
+    public void AddEntry(string name, DateOnly date, string content, List<string>? tags = null)
     {
+        name = name.Trim();
+        string filePath = Path.Combine(Constants.EntriesFolderPath, $"{name}.json");
+        JournalEntry newEntry = new JournalEntry(name, date, content, tags);
+        Entries.Add(newEntry);
         
-             string filePath = Path.Combine(Constants.EntriesFolderPath, $"{name}.json");
-             JournalEntry newEntry = new JournalEntry(name, date, content);
-             Entries.Add(newEntry);
-             File.WriteAllText(filePath, JsonSerializer.Serialize<JournalEntry>(newEntry));
+        File.WriteAllText(filePath, JsonSerializer.Serialize<JournalEntry>(newEntry));
     }
     
     public void ReadEntry(JournalEntry entry)
@@ -120,6 +124,24 @@ public class Journal
             Entries.Remove(entry);
         }
             
+    }
+
+    public void EditEntry(JournalEntry entry, string newName, string newContent, List<string>? newTags)
+    {
+        newName = newName.Trim();
+        int idx = Entries.IndexOf(entry);
+        if (idx == -1)
+            return;
+        JournalEntry newEntry = new JournalEntry(newName,entry.Date ,newContent, newTags);
+        newEntry.LastModified = DateTime.Now;
+        
+        var newFilePath = Path.Combine(Constants.EntriesFolderPath, $"{newName}.json");
+        File.WriteAllText(newFilePath, JsonSerializer.Serialize<JournalEntry>(newEntry));
+        if (!string.Equals(entry.GetFilePath(), newFilePath, StringComparison.OrdinalIgnoreCase))
+        {
+            File.Delete(entry.GetFilePath());
+        }
+        Entries[idx] = newEntry;
     }
 
     public struct SearchResults
@@ -170,7 +192,7 @@ public class Journal
         return Constants.TagValidationResult.Valid;
     }
 
-    public Constants.TagValidationResult AddTag(string tag)
+    public Constants.TagValidationResult CreateTag(string tag)
     {
         var verdict = AddTagWithoutSaving(tag);
         if (verdict == Constants.TagValidationResult.Valid)
@@ -197,5 +219,4 @@ public class Journal
 
         return tagValidationResult;
     }
-    
 }

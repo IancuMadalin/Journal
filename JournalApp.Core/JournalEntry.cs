@@ -10,20 +10,17 @@ public class JournalEntry
     
     public JournalEntry()
     {}
-
-    public JournalEntry(string title, DateOnly date, string content)
+    
+    public JournalEntry(string title, DateOnly date, string content, List<string>? tags = null)
     {
         Name = title;
         Date = date;
         Content = content;
-    }
-
-    public JournalEntry(string title, DateOnly date, string content, List<string> tags)
-    {
-        Name = title;
-        Date = date;
-        Content = content;
-        Tags = tags;
+        if (tags != null)
+            foreach (string tag in tags)
+            {
+                AddTag(tag);
+            }
     }
     public void Display()
     {
@@ -35,4 +32,18 @@ public class JournalEntry
     {
         return Path.Combine(Constants.EntriesFolderPath, $"{Name}.json");
     }
+    
+    public void AddTag(string tag)
+    {
+        tag = Journal.NormalizeTag(tag);
+        if (!Tags.Contains(tag) && tag.Length > 0)
+            Tags.Add(tag);
+    }
+
+    public bool RemoveTag(string tag)
+    {
+        tag = Journal.NormalizeTag(tag);
+        return Tags.Remove(tag);
+    }
+    
 }
