@@ -34,24 +34,33 @@
                     <RowDefinition Height = "Auto"></RowDefinition>
                     <RowDefinition Height = "Auto"></RowDefinition>
                     <RowDefinition Height = "Auto"></RowDefinition>
+                    <RowDefinition Height = "Auto"></RowDefinition>
+                    <RowDefinition Height = "Auto"></RowDefinition>
                     <RowDefinition Height = "*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row = "0" Name = "Title"
                            Margin="0,0,0,10"></TextBlock>
-                <TextBlock Grid.Row = "1" Name = "Date"
+                <TextBlock Grid.Row = "1" Name = "Tags"
                            Margin="0,0,0,10"></TextBlock>
-                <TextBlock Grid.Row = "2" Name = "Content"></TextBlock>
-                <StackPanel Grid.Row="3"
+                <TextBlock Grid.Row = "2" Name = "Date"
+                           Margin="0,0,0,10"></TextBlock>
+                <TextBlock Grid.Row = "3" Name = "LastDate"
+                           Margin="0,0,0,10"></TextBlock>
+                <TextBlock Grid.Row = "4" Name = "EntryContent"></TextBlock>
+                
+                <StackPanel Grid.Row="5"
                             Name = "EditDeleteButtons"
                             Orientation="Horizontal"
                             HorizontalAlignment="Right"
                             Visibility="Hidden">
-                    <Button Content="Edit Entry"></Button>
+                    <Button Content="Edit Entry"
+                            Name="EditButton"
+                            Click="EditButton_OnClick"></Button>
                     <Button Content="Delete Entry"
                             Name = "DeleteButton"
                             Click="DeleteButton_OnClick"></Button>
                 </StackPanel>
-                <Button Grid.Row="4"
+                <Button Grid.Row="6"
                         Content="Close"
                         Width="50"
                         HorizontalAlignment="Right"

@@ -21,15 +21,15 @@
                                      Click="ViewAllEntries_OnClick" 
                                      Style="{StaticResource Menu}"></Button>
                              <Button Content = "Add entry"
-                                     Click="AddEntryButton_OnClick"
+                                     Click="EditorButton_OnClick"
                                      Style="{StaticResource Menu}"></Button>
                              <Button Content = "Search entry"></Button>
                          </StackPanel>
             <local:DisplayAreaControl Grid.Row="2"
                                       x:Name="DisplayAreaControl"
                                       Visibility="Collapsed"/>
-            <local:AddEntryControl Grid.Row = "2"
-                                   x:Name="AddEntryPanel"
+            <local:EntryEditor Grid.Row = "2"
+                                   x:Name="EditorPanel"
                                    Visibility="Collapsed"/>
             </Grid>
 </Window>

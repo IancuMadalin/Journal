@@ -1,0 +1,115 @@
+﻿<UserControl x:Class="JournalApp.Gui.EntryEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:JournalApp.Gui"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid
+        Background="DarkMagenta">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0">Title: </TextBlock>
+                <TextBox Grid.Row="0"
+                         Grid.Column="1"
+                         Margin="0,0,0,0"
+                         Name = "TitleInputBox"
+                         TextChanged="TitleInputBox_OnTextChanged"></TextBox>
+        
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0">Content: </TextBlock>
+                <TextBox Grid.Row="1"
+                         Grid.Column="1"
+                         Margin="0,0,0,0"
+                         Name="ContentInputBox"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"></TextBox>
+        
+                <TextBlock Grid.Row="2"
+                            Grid.Column="0">Tags: </TextBlock>
+                <Grid Grid.Row="2"
+                      Grid.Column="1"
+                      Margin="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                             Name="EntryTagsBlock"
+                             TextWrapping="Wrap"
+                             Background="White"></TextBlock>
+                    <Button Grid.Column="1"
+                            Name="AddTagButton"
+                            Content="Add Tag"
+                            Click="AddTagButton_OnClick"></Button>
+                </Grid>
+                
+                <Border Grid.Row="3"
+                        Grid.Column="1"
+                        Name="TagPickerPanel"
+                        Visibility="Collapsed"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Padding="1">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0"
+                                     Name="TagSearchBox"
+                                     TextChanged="TagSearchBox_OnTextChanged"></TextBox>
+                            <Button Grid.Column="1"
+                                    Name="CreateTagButton"
+                                    Content="Create Tag"
+                                    Click="CreateTagButton_OnClick"></Button>
+                        </Grid>
+                        <TextBlock
+                            Name="TagMessageBlock"></TextBlock>
+                        <ScrollViewer
+                            MaxHeight="120"
+                            VerticalScrollBarVisibility="Auto">
+                            <StackPanel
+                                Name="TagOptionsPanel">
+                            </StackPanel>
+                        </ScrollViewer>
+                    </StackPanel>
+                    
+                </Border>
+        
+                    <Button Grid.Row="4"
+                            Grid.Column="0"
+                            Name="AddNewEntryButton"
+                            Content="Add new entry"
+                            Visibility="Hidden"
+                            Click="AddNewEntryButton_OnClick"></Button>
+                    <TextBlock  Grid.Row="4"
+                                Grid.Column="1"
+                                Name="NewEntryResponseBlock"
+                                Visibility="Hidden"></TextBlock>
+        
+                    <Button Grid.Row="5"
+                            Grid.Column="1"
+                            Content="Close"
+                            Width="50"
+                            Height="30"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Name="CloseButton"
+                            Click="CloseButton_OnClick"></Button>
+    </Grid>
+</UserControl>

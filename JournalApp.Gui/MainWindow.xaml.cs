@@ -22,8 +22,10 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        AddEntryPanel.Finished += AddEntryPanel_OnFinished;
+        EditorPanel.Finished += EditorPanel_OnFinished;
+        EditorPanel.EditSaved += EditorPanel_OnEditSaved;
         DisplayAreaControl.Finished += DisplayAreaControl_OnFinished;
+        DisplayAreaControl.EditRequested += DisplayAreaControl_EditRequested;
     }
 
     private void ShowPanel(UIElement panel)
@@ -45,23 +47,37 @@ public partial class MainWindow : Window
         }
     }
 
-    private void AddEntryPanel_OnFinished(object sender, EventArgs e)
+    private void EditorPanel_OnFinished(object? sender, EventArgs e)
     {
         HidePanel();
     }
 
-    private void DisplayAreaControl_OnFinished(object sender, EventArgs e)
+    private void EditorPanel_OnEditSaved(object? sender, JournalEntry editedEntry)
+    {
+        ShowPanel(DisplayAreaControl);
+        DisplayAreaControl.SelectEntry(editedEntry);
+    }
+
+    private void DisplayAreaControl_OnFinished(object? sender, EventArgs e)
     {
         HidePanel();
     }
+
+    private void DisplayAreaControl_EditRequested(object? sender, JournalEntry entry)
+    {
+        EditorPanel.LoadEntry(entry);
+        ShowPanel(EditorPanel);
+    }
+    
     private void ViewAllEntries_OnClick(object sender, RoutedEventArgs e)
     {
         ShowPanel(DisplayAreaControl);
     }
     
-    private void AddEntryButton_OnClick(object sender, RoutedEventArgs e)
+    private void EditorButton_OnClick(object sender, RoutedEventArgs e)
     {
-        ShowPanel(AddEntryPanel);
+        EditorPanel.Reset();
+        ShowPanel(EditorPanel);
     }
     
     

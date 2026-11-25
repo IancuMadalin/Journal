@@ -126,12 +126,12 @@ public class Journal
             
     }
 
-    public void EditEntry(JournalEntry entry, string newName, string newContent, List<string>? newTags)
+    public JournalEntry? EditEntry(JournalEntry entry, string newName, string newContent, List<string>? newTags)
     {
         newName = newName.Trim();
         int idx = Entries.IndexOf(entry);
         if (idx == -1)
-            return;
+            return null;
         JournalEntry newEntry = new JournalEntry(newName,entry.Date ,newContent, newTags);
         newEntry.LastModified = DateTime.Now;
         
@@ -142,6 +142,7 @@ public class Journal
             File.Delete(entry.GetFilePath());
         }
         Entries[idx] = newEntry;
+        return newEntry;
     }
 
     public struct SearchResults

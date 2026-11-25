@@ -6,6 +6,7 @@ namespace JournalApp.Gui;
 public partial class DisplayAreaControl : UserControl
 {
     public event EventHandler? Finished;
+    public event EventHandler<JournalEntry>? EditRequested;
     
     private readonly Journal journal = Journal.Instance;
     private JournalEntry? currentEntry;
@@ -20,13 +21,19 @@ public partial class DisplayAreaControl : UserControl
         if (EntryListBox.SelectedItem is JournalEntry entry)
         {
             Title.Text = "Title: " + entry.Name;
+            Tags.Text = "Tags: " + entry.Tags;
             Date.Text = "Date: " + entry.Date.ToShortDateString();
-            Content.Text = entry.Content;
+            //LastDate.Text = "Last modified: " + entry.LastModified;
+            EntryContent.Text = entry.Content;
+            
             EditDeleteButtons.Visibility =  Visibility.Visible;
             currentEntry = entry;
         }
         else
         {
+            Title.Text = String.Empty;
+            Date.Text = String.Empty;
+            EntryContent.Text = String.Empty;
             currentEntry = null;
             EditDeleteButtons.Visibility =  Visibility.Hidden;
         }
@@ -40,5 +47,18 @@ public partial class DisplayAreaControl : UserControl
     private void CloseButton_OnClick(object sender, RoutedEventArgs e)
     {
         Finished?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void EditButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (currentEntry == null)
+            return;
+        EditRequested?.Invoke(this, currentEntry);
+    }
+
+    public void SelectEntry(JournalEntry entry)
+    {
+        EntryListBox.SelectedItem = entry;
+        EntryListBox.ScrollIntoView(entry);
     }
 }
